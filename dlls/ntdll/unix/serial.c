@@ -1038,32 +1038,53 @@ static NTSTATUS wait_on(HANDLE hDevice, int fd, HANDLE hEvent, PIO_STATUS_BLOCK 
  * Return error in that case
  */
 #if !defined(TIOCINQ)
-    if (commio->evtmask & EV_RXCHAR)
-	goto error_caps;
+    if (commio->evtmask & EV_RXCHAR) {
+        FIXME("!defined(TIOCINQ) EV_RXCHAR\n");
+        goto out_now;
+	    //goto error_caps;
+    }
 #endif
 #if !(defined(TIOCSERGETLSR) && defined(TIOCSER_TEMT)) || !defined(TIOCINQ)
-    if (commio->evtmask & EV_TXEMPTY)
-	goto error_caps;
+    if (commio->evtmask & EV_TXEMPTY) {
+        FIXME("!(defined(TIOCSERGETLSR) && defined(TIOCSER_TEMT)) || !defined(TIOCINQ) EV_TXEMPTY\n");
+        goto out_now;
+	    //goto error_caps;
+    }
 #endif
 #if !defined(TIOCMGET)
-    if (commio->evtmask & (EV_CTS | EV_DSR| EV_RING| EV_RLSD))
-	goto error_caps;
+    if (commio->evtmask & (EV_CTS | EV_DSR| EV_RING| EV_RLSD)) {
+        FIXME("!defined(TIOCMGET) EV_CTS | EV_DSR| EV_RING| EV_RLSD\n");
+        goto out_now;
+	    //goto error_caps;
+    }
 #endif
 #if !defined(TIOCM_CTS)
-    if (commio->evtmask & EV_CTS)
-	goto error_caps;
+    if (commio->evtmask & EV_CTS) {
+        FIXME("!defined(TIOCM_CTS) EV_CTS\n");
+        goto out_now;
+	    //goto error_caps;
+    }
 #endif
 #if !defined(TIOCM_DSR)
-    if (commio->evtmask & EV_DSR)
-	goto error_caps;
+    if (commio->evtmask & EV_DSR) {
+        FIXME("!defined(TIOCM_DSR) EV_DSR\n");
+        goto out_now;
+	    //goto error_caps;
+    {
 #endif
 #if !defined(TIOCM_RNG)
-    if (commio->evtmask & EV_RING)
-	goto error_caps;
+    if (commio->evtmask & EV_RING) {
+        FIXME("!defined(TIOCM_RNG) EV_RING\n");
+        goto out_now;
+	    //goto error_caps;
+    }
 #endif
 #if !defined(TIOCM_CAR)
-    if (commio->evtmask & EV_RLSD)
-	goto error_caps;
+    if (commio->evtmask & EV_RLSD) {
+        FIXME("!defined(TIOCM_CAR) EV_RLSD\n");
+        goto out_now;
+	    //goto error_caps;
+    }
 #endif
     if (commio->evtmask & EV_RXFLAG)
 	FIXME("EV_RXFLAG not handled\n");
